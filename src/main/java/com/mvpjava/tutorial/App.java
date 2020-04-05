@@ -59,9 +59,9 @@ public class App {
 	    while (true)
 	    {	
 			collection.insertOne(new Document()
-										.append("website", (RandomStringUtils.randomAlphabetic(10))+ ".com")
-	    								.append("hitcount", randomHits.nextInt(1000))
-								);	
+						.append("website", (RandomStringUtils.randomAlphabetic(10))+ ".com")
+	    					.append("hitcount", randomHits.nextInt(1000))
+					    );	
 			
 			try {
 				//Slow this down on purpose
@@ -71,14 +71,8 @@ public class App {
 				System.exit(-1);
 			}
 			
-	    }    
-	    
-
-	    
-	    
-	    
-	    //viewCollectionViaUserInput(collection);
-
+	    }    	    
+	   
 	}
 	
 	/*
