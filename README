@@ -1,1 +1,17 @@
 Java Driver API connecting to mongo DB 4.0 running (running in Docker container) 
+
+Quick demo showing how to connect to mongo db 4.0 with new Java Driver API.
+
+The Java Application simply connected to an already running Mongo DB instance on port 27017
+on the "admin" database using root user credentials used by looking at environmental variables
+"MONGO_INITDB_ROOT_USERNAME" and "MONGO_INITDB_ROOT_PASSWORD"
+		
+Once connected the application will enter a loop in which it will insert a new Documents into the "metrics" 
+collection which randomly inserts a domain name (random string) along with a random hit/visit count.
+
+Once compiled an uber jar is created with all dependancies needed in order to be run via "java -jar FOO.jar" command.
+
+This demo is actually part of a larger demo which show cases deploying the jar into a Docker swarm "developer"
+environment in orer to showcase the benifits of using swarm in a development environment.
+
+You can check out the  mvpjava/docker-swarm-development-env GitHub repository to get access to the full Docker swarm enviroment
