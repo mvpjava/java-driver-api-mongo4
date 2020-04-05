@@ -1,5 +1,3 @@
-Java Driver API connecting to mongo DB 4.0 running (running in Docker container) 
-
 Quick demo showing how to connect to mongo db 4.0 with new Java Driver API.
 
 The Java Application connects to an already running Mongo DB instance on port 27017
