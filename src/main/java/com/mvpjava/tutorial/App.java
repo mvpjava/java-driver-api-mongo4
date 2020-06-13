@@ -25,6 +25,7 @@ import com.mongodb.ServerAddress;
 import com.mongodb.client.MongoClient;
 
 public class App {
+    private final static  java.util.logging.Logger LOGGER =  java.util.logging.Logger.getLogger(App.class.getName());
 
 	public static void main(String[] args) {
 		App app = new App();
@@ -36,30 +37,33 @@ public class App {
 		Logger rootLogger = (Logger)LoggerFactory.getLogger(org.slf4j.Logger.ROOT_LOGGER_NAME); 
 		rootLogger.setLevel(Level.ERROR);
 		
-		
 		MongoCredential credential = MongoCredential.createCredential
-				(System.getenv("MONGO_INITDB_ROOT_USERNAME"), 
-				"admin",
-				System.getenv("MONGO_INITDB_ROOT_PASSWORD").toCharArray());
+				(
+				  System.getenv("MONGO_INITDB_ROOT_USERNAME"), "admin",
+				  System.getenv("MONGO_INITDB_ROOT_PASSWORD").toCharArray()
+				);
 		
+    	LOGGER.info("Attempting to connect to mongo ...");
 		
 		MongoClient mongoClient = MongoClients.create(
 		        MongoClientSettings.builder()
-		                .applyToClusterSettings(builder ->
-		                        builder.hosts(Arrays.asList(new ServerAddress("mongo", 27017))))
+		                .applyToClusterSettings(builder -> builder.hosts(Arrays.asList(new ServerAddress("mongo", 27017))))
 		                .credential(credential)
 		                .build());
 		
 	    MongoDatabase database = mongoClient.getDatabase("demo");
 	    MongoCollection<Document> collection = database.getCollection("metrics");
+ 
+	    LOGGER.info("Connected to mongo");
 	    
 	    //Main Loop which inserts a new Document into Collection every 5 seconds
 	    Random randomHits = new Random();
 
 	    while (true)
 	    {	
+	    	LOGGER.info("Inserting Document into metrics Collection");
 			collection.insertOne(new Document()
-						.append("website", (RandomStringUtils.randomAlphabetic(10))+ ".com")
+						    .append("website", (RandomStringUtils.randomAlphabetic(10))+ ".com")
 	    					.append("hitcount", randomHits.nextInt(1000))
 					    );	
 			
@@ -67,7 +71,7 @@ public class App {
 				//Slow this down on purpose
 				Thread.sleep(5000);
 			} catch (InterruptedException e) {
-				System.out.println("Sleep was interuppted by another Thread. Exiting");
+				LOGGER.warning("Sleep was interuppted by another Thread. Exiting");
 				System.exit(-1);
 			}
 			
